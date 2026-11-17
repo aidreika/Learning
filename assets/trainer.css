@@ -1,0 +1,42 @@
+/* Training simulator (assets/trainer.js). Blue = a card's weight, teal = a group's weight, amber = moved now. */
+.trainer {
+  display: grid; gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px;
+}
+.tr-pos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.tr-label { font-weight: 600; }
+.tr-hand { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.tr-calc { background: var(--surface-2); border: 0; }
+.tr-hint { min-height: 1.5em; }
+.tr-weights { display: grid; gap: 2px; }
+.tr-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4rem;
+  grid-template-areas: 'name val' 'bar bar' 'shift shift';
+  column-gap: 10px; row-gap: 4px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background-color 0.25s;
+}
+.tr-row.lit { background: var(--lit-soft); }
+.tr-row.lit .tr-shift { color: var(--lit-edge); font-weight: 600; }
+.tr-row.idle .tr-shift { color: var(--ink-3); }
+.tr-name { grid-area: name; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.tr-tag { font-size: 0.75rem; color: var(--ink-3); }
+.tr-tag.group { color: var(--strict); }
+.tr-val { grid-area: val; text-align: right; font-weight: 600; align-self: center; }
+.tr-bar { grid-area: bar; position: relative; height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.tr-bar::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ink-3); }
+.tr-bar span { position: absolute; top: 0; bottom: 0; transition: width 0.3s; }
+.tr-bar .pos { background: var(--face); border-radius: 0 4px 4px 0; }
+.tr-bar .neg { background: var(--err); border-radius: 4px 0 0 4px; }
+.tr-shift { grid-area: shift; min-height: 1.3em; color: var(--ink-2); }
+.tr-ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.tr-probes { display: grid; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+.tr-probe { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.tr-say { font-size: 0.92rem; color: var(--ink-2); }
+.tr-say b { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .tr-row, .tr-bar span { transition: none; } }

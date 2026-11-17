@@ -1,0 +1,242 @@
+/* Shared stylesheet of the course «Нейросети для бота Brawl». Every page links it.
+   Layout: one reading column (~65ch), numbered steps as the spine, notes inline on a phone and in the right margin
+   on a wide screen. The look and the colour meanings follow the brawl network designer (tools/nn app.css,
+   DECISIONS 280): quiet paper, hairlines; blue = numbers from the game, amber = what changed (lit), teal = links
+   drawn by hand (groups), violet = subnets. Inter for text, Manrope for headings. */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef1f5;
+  --ink: #17202b;
+  --ink-2: #4f5a69;
+  --ink-3: #8a94a3;
+  --line: #d9dde4;
+  --face: #2c69cf;        /* numbers from the game, the cards' weights */
+  --face-soft: #dbe7fb;
+  --lit: #f0a81c;         /* what moved in this step */
+  --lit-edge: #a86c00;
+  --lit-soft: #fcefd0;
+  --strict: #0b8574;      /* a group: a link drawn by hand */
+  --strict-soft: #d6efe9;
+  --sub: #7a4fc4;
+  --sub-soft: #ebe3f9;
+  --ok: #0b8574;
+  --ok-soft: #d6efe9;
+  --err: #c2392f;
+  --err-soft: #f9e0dd;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --display: 'Manrope', 'Inter', system-ui, sans-serif;
+  --r: 10px;
+  --tap: 44px;
+  --measure: 40rem;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #11151b;
+    --surface: #181e27;
+    --surface-2: #1e2530;
+    --ink: #e5e9f0;
+    --ink-2: #a3adbc;
+    --ink-3: #6f7b8c;
+    --line: #2c3442;
+    --face: #74a6f7;
+    --face-soft: #1b2c4a;
+    --lit: #f4b740;
+    --lit-edge: #f4b740;
+    --lit-soft: #3a2f14;
+    --strict: #3fcbb5;
+    --strict-soft: #153a35;
+    --sub: #b08cf0;
+    --sub-soft: #2c2445;
+    --ok: #3fcbb5;
+    --ok-soft: #153a35;
+    --err: #ff7b6e;
+    --err-soft: #44201d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #11151b;
+  --surface: #181e27;
+  --surface-2: #1e2530;
+  --ink: #e5e9f0;
+  --ink-2: #a3adbc;
+  --ink-3: #6f7b8c;
+  --line: #2c3442;
+  --face: #74a6f7;
+  --face-soft: #1b2c4a;
+  --lit: #f4b740;
+  --lit-edge: #f4b740;
+  --lit-soft: #3a2f14;
+  --strict: #3fcbb5;
+  --strict-soft: #153a35;
+  --sub: #b08cf0;
+  --sub-soft: #2c2445;
+  --ok: #3fcbb5;
+  --ok-soft: #153a35;
+  --err: #ff7b6e;
+  --err-soft: #44201d;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 17px/1.6 var(--font);
+  font-feature-settings: 'cv11', 'ss01';
+}
+.page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 56px;
+}
+.col { max-width: var(--measure); }
+@media (min-width: 1000px) {
+  .page { display: grid; grid-template-columns: minmax(0, var(--measure)) 15rem; column-gap: 3rem; }
+  .page > * { grid-column: 1; }
+}
+
+/* Type */
+h1, h2, h3 { font-family: var(--display); line-height: 1.25; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.3rem; font-weight: 700; }
+h3 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+.flow > * + * { margin-top: 0.9em; }
+a { color: var(--face); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--face); outline-offset: 2px; border-radius: 4px; }
+.eyebrow {
+  font: 600 0.78rem/1.3 var(--font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.lede { font-size: 1.1rem; color: var(--ink-2); }
+.muted { color: var(--ink-2); }
+.small { font-size: 0.88rem; line-height: 1.5; }
+.num, .tab { font-variant-numeric: tabular-nums; }
+b, strong { font-weight: 600; }
+em.term { font-style: normal; font-weight: 600; }
+.crumbs { font-size: 0.9rem; margin-bottom: 18px; }
+.crumbs a { text-decoration: none; }
+
+/* Lesson header */
+.head { display: grid; gap: 10px; padding-bottom: 22px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.question {
+  margin-top: 6px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.question .eyebrow { margin-bottom: 4px; }
+
+/* Numbered steps: the spine of a lesson */
+.step { padding-block: 26px 4px; display: grid; gap: 12px; }
+.step-head { display: flex; gap: 12px; align-items: baseline; }
+.step-n {
+  flex: none;
+  width: 30px; height: 30px;
+  display: inline-grid; place-items: center;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  font: 700 0.95rem/1 var(--display);
+  transform: translateY(4px);
+}
+.about { font-size: 0.92rem; color: var(--ink-2); }
+.got {
+  border-left: 3px solid var(--ok);
+  padding: 4px 0 4px 12px;
+  font-size: 0.95rem;
+}
+.got::before { content: 'Что установили. '; font-weight: 600; color: var(--ok); }
+
+/* Notes: inline on a phone, in the margin on a wide screen */
+.note {
+  font-size: 0.88rem; line-height: 1.5; color: var(--ink-2);
+  padding: 10px 12px; background: var(--surface-2); border-radius: 8px;
+}
+.note .eyebrow { display: block; margin-bottom: 2px; }
+
+/* A formula line */
+.formula {
+  font: 500 1rem/1.5 var(--font);
+  font-variant-numeric: tabular-nums;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+.formula .w { color: var(--face); font-weight: 600; }
+.formula .lit { background: var(--lit-soft); border-radius: 4px; padding: 0 3px; }
+.formula .row + .row { margin-top: 4px; }
+
+/* Card chip (a card from the game) and group chip */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 2px 9px; border-radius: 999px;
+  background: var(--face-soft); color: var(--ink);
+  font-size: 0.92em; font-weight: 500; white-space: nowrap;
+}
+.chip.group { background: var(--strict-soft); }
+.chip.none { background: var(--surface-2); color: var(--ink-2); }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 6px; font-size: 0.85em; font-weight: 600; }
+.badge.win { background: var(--ok-soft); color: var(--ok); }
+.badge.loss { background: var(--err-soft); color: var(--err); }
+
+/* Boxes at the end of a lesson */
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 8px; }
+.box.source { border-color: var(--face); }
+.box.ask { border-color: var(--strict); }
+.next { display: grid; gap: 6px; padding-top: 18px; border-top: 1px solid var(--line); }
+.boxes { display: grid; gap: 14px; padding-block: 26px; }
+
+/* Lists of lessons and pages */
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.list a { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; }
+.list a:hover { border-color: var(--face); }
+.list .t { font: 700 1.02rem/1.35 var(--display); color: var(--ink); }
+.list .d { font-size: 0.9rem; color: var(--ink-2); margin-top: 2px; }
+.list .soon { padding: 14px 16px; border: 1px dashed var(--line); border-radius: var(--r); color: var(--ink-3); font-size: 0.92rem; }
+
+/* Buttons */
+.btn {
+  min-height: var(--tap);
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 0.95rem/1 var(--font);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+
+/* Reference pages: dense, printable */
+.ref h2 { margin-top: 28px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.ref dl { margin: 12px 0 0; display: grid; gap: 14px; }
+.ref dt { font-weight: 700; font-family: var(--display); }
+.ref dd { margin: 2px 0 0; }
+.ref .avoid { font-size: 0.86rem; color: var(--ink-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+@media print {
+  :root { --bg: #fff; --surface: #fff; }
+  body { font-size: 11pt; }
+  .btn, .no-print { display: none !important; }
+  .page { display: block; max-width: none; padding: 0; }
+  a { color: inherit; }
+  .step, .box, .trainer, .quiz-q { break-inside: avoid; }
+}
