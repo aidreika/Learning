@@ -1,0 +1,39 @@
+/* Quiz (assets/quiz.js). */
+.quiz { display: grid; gap: 18px; counter-reset: q; }
+.quiz-q {
+  display: grid; gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px;
+  counter-increment: q;
+  scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 12px);
+}
+.q-text::before { content: 'Вопрос ' counter(q) '. '; font-weight: 700; font-family: var(--display); }
+.q-opts { display: grid; gap: 8px; counter-reset: o; }
+.q-opts button {
+  counter-increment: o;
+  display: flex; gap: 10px; align-items: baseline;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 10px 12px;
+  text-align: left;
+  font: 400 0.98rem/1.4 var(--font);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--surface-2);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.q-opts button::before { content: counter(o, upper-alpha); font-weight: 700; color: var(--ink-3); flex: none; }
+.q-opts button:disabled { cursor: default; }
+.q-opts button.right { background: var(--ok-soft); border-color: var(--ok); }
+.q-opts button.right::before { color: var(--ok); }
+.q-opts button.wrong { background: var(--err-soft); border-color: var(--err); }
+.q-opts button.wrong::before { color: var(--err); }
+.q-why { font-size: 0.93rem; line-height: 1.5; padding: 10px 12px; border-left: 3px solid var(--ink-3); color: var(--ink-2); }
+.q-why::before { content: attr(data-verdict) ' '; font-weight: 700; color: var(--ink); }
+.quiz-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.quiz-score { font-weight: 600; }

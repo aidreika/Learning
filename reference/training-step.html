@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Шаг обучения · шпаргалка</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap">
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<main class="page ref">
+  <nav class="crumbs no-print"><a href="../index.html">← Нейросети для бота Brawl</a></nav>
+  <header class="head col">
+    <span class="eyebrow">Шпаргалка · из урока 1</span>
+    <h1>Шаг обучения</h1>
+    <p class="muted">Что происходит с весами сети на одной позиции из записанной партии.</p>
+  </header>
+
+  <section class="col">
+    <h2>Три строки</h2>
+    <div class="formula" style="margin-top:12px">
+      <div class="row"><b>Оценка</b> = сумма весов, которые участвуют в позиции</div>
+      <div class="row"><b>Ошибка</b> = правильный ответ − оценка <span class="muted">(победа +1, поражение −1)</span></div>
+      <div class="row"><b>Сдвиг веса</b> = скорость обучения × ошибка × участие</div>
+    </div>
+    <p class="small muted" style="margin-top:8px">Участие — сколько раз вес вошёл в оценку: карта в руке 1, карты нет 0; вес
+      группы — по числу её карт в руке. Скорость обучения — маленькое постоянное число (в уроке 0,1).</p>
+  </section>
+
+  <section class="col">
+    <h2>Пример</h2>
+    <div class="formula" style="margin-top:12px">
+      <div class="row">Веса: все 0. Рука: Жрица ярости, Огненный шар. Победа.</div>
+      <div class="row">Оценка 0 · ошибка +1 − 0 = +1</div>
+      <div class="row">Жрица ярости 0,1 × 1 × 1 = <span class="lit">+0,1</span> · Огненный шар <span class="lit">+0,1</span> ·
+        Трикстер Токи 0,1 × 1 × 0 = 0</div>
+    </div>
+  </section>
+
+  <section class="col">
+    <h2>Следствия</h2>
+    <dl>
+      <dt>Не участвовал — не сдвинулся</dt>
+      <dd>Позиция учит только веса, которые вошли в её оценку.</dd>
+      <dt>Повтор тех же партий не добавляет позиций</dt>
+      <dd>Карта, которой нет в данных (Трикстер Токи), сохраняет стартовый вес после любого числа кругов.</dd>
+      <dt>Карты одной позиции сдвигаются одинаково</dt>
+      <dd>Какая из них хороша, сеть узнаёт только по многим позициям, где карты встречались порознь.</dd>
+      <dt>Общий вес группы учится на всех её картах</dt>
+      <dd>И передаёт выученное новой карте группы. Собственному весу новой карты учиться не на чем.</dd>
+      <dt>Редкая карта и редкая группа учатся медленно</dt>
+      <dd>Их веса участвуют только в немногих позициях.</dd>
+    </dl>
+  </section>
+
+  <section class="col">
+    <h2>В большой сети</h2>
+    <p style="margin-top:12px">Сдвиг веса = скорость × ошибка, дошедшая до веса × число, пришедшее на вход веса. Пришёл ноль —
+      сдвига нет (Нильсен, <a href="https://habr.com/ru/post/457980/">глава 2</a>, уравнение BP4). Adam считает размер сдвига
+      иначе, но вес, ни разу не участвовавший, не сдвигает и он. Все веса сразу двигает только штраф на веса.</p>
+  </section>
+
+  <section class="col">
+    <h2>Источники</h2>
+    <p class="small" style="margin-top:12px">Нильсен, «Нейросети и глубокое обучение»:
+      <a href="https://habr.com/ru/post/456738/">глава 1</a> (правило сдвига, «скорость обучения»),
+      <a href="https://habr.com/ru/post/457980/">глава 2</a> (BP4). Урок:
+      <a href="../lessons/0001-a-weight-learns-where-it-took-part.html">Вес учится только там, где участвовал</a>.</p>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Словарь курса</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap">
+<link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<!-- The course glossary (format: .claude/skills/teach/GLOSSARY-FORMAT.md). A term is added only once the user
+     uses it correctly; every lesson keeps to these words. -->
+<main class="page ref">
+  <nav class="crumbs no-print"><a href="../index.html">← Нейросети для бота Brawl</a></nav>
+  <header class="head col">
+    <span class="eyebrow">Шпаргалка</span>
+    <h1>Словарь курса</h1>
+    <p class="muted">Слова, которыми говорят все уроки, — только те, что вы уже освоили. Термин попадает сюда, когда вы
+      правильно им пользуетесь, а не когда он впервые встретился.</p>
+  </header>
+
+  <section class="col">
+    <h2>Обучение</h2>
+    <dl>
+      <dt>Вес</dt>
+      <dd>Число внутри сети, которое подбирает обучение.
+        <div class="avoid">Не говорим: параметр, коэффициент.</div></dd>
+      <dt>Оценка позиции</dt>
+      <dd>Ответ сети о позиции: насколько она выигрышная для того, кто ходит.
+        <div class="avoid">Не говорим: eval, скор.</div></dd>
+      <dt>Правильный ответ</dt>
+      <dd>То, что сеть должна была ответить на позиции. Для оценки позиции — итог партии (в уроках: победа +1, поражение
+        −1).
+        <div class="avoid">Не говорим: метка, лейбл, таргет.</div></dd>
+      <dt>Ошибка</dt>
+      <dd>Правильный ответ минус оценка сети на одной позиции.
+        <div class="avoid">Не путать с функцией потерь (loss): о ней будет отдельный урок.</div></dd>
+      <dt>Обучение</dt>
+      <dd>Многократный сдвиг весов так, чтобы ошибка на записанных позициях становилась меньше.</dd>
+    </dl>
+  </section>
+
+  <section class="col">
+    <h2>Ждут вашей проверки</h2>
+    <p class="small muted" style="margin-top:12px">Термины урока 1 (скорость обучения, участие, общий вес группы) попадут в
+      словарь, когда вы пройдёте проверку урока и сможете объяснить их своими словами.</p>
+  </section>
+</main>
+</body>
+</html>
